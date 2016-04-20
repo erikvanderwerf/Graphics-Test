@@ -7,7 +7,6 @@ class PathfindPayload :
 	public JobPayload
 {
 public:
-	PathfindPayload();
 	virtual ~PathfindPayload();
 
 	sf::Vector2f payload;

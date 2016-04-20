@@ -32,16 +32,19 @@ void Actor::bind(Game * game)
 
 int Actor::jobCallback(Job * job)
 {
+	// If job is complete, handle it.
 	if (!job->complete)
 		return 0;
 
+	// Determine command within job.
 	if ("pathfind" == job->command) {
 		PathfindPayload* resp = (PathfindPayload*)job->responce;
 		setDestination(resp->payload);
 		waiting_path = false;
-		delete resp;
-		return 1;
 	}
+
+	// Once job is handled, delete.
+	delete job;
 	return 1;
 }
 
@@ -63,7 +66,7 @@ void Actor::tick(float dt)
 
 	if (!waiting_path && sqrt(pow(destination.x - coordinate.x, 2) + pow(destination.y - coordinate.y, 2)) < 5) {
 		Job* pathjob = new Job("pathfind");
-		pathjob->deliver = new PathfindPayload();
+		//pathjob->deliver = new PathfindPayload();
 
 		jobs.push_back(pathjob);
 		game->registerJob(pathjob);

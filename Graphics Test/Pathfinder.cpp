@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Pathfinder.h"
-#include "JobPayload.h"
+//#include "JobPayload.h"
 #include "PathfindPayload.h"
 #include "Game.h"
 
@@ -57,7 +57,8 @@ void Pathfinder::start()
 		ndest.x = (float)(std::rand() % 10000);
 		ndest.y = (float)(std::rand() % 10000);
 		
-		PathfindPayload* responce = (PathfindPayload*) job->responce;
+		job->responce = new PathfindPayload();
+		PathfindPayload* responce = (PathfindPayload*)job->responce;
 		responce->payload = ndest;
 
 		job->complete = true;

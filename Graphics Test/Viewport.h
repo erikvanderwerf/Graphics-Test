@@ -2,6 +2,7 @@
 
 #include <SFML\Graphics.hpp>
 #include <list>
+
 #include "Entity.h"
 #include "EventListener.h"
 #include "Threadable.h"

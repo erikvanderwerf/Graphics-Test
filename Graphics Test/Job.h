@@ -2,8 +2,9 @@
 
 #include <string>
 
-#include "Entity.h"
-#include "JobPayload.h"
+//#include "JobPayload.h"
+
+class JobPayload;
 
 class Job
 {
@@ -14,7 +15,5 @@ public:
 	bool volatile complete;
 	std::string command;
 
-	//JobGenerator* origin;
 	JobPayload *deliver, *responce;
 };
-

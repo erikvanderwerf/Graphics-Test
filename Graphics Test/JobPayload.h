@@ -3,6 +3,7 @@
 class JobPayload
 {
 public:
-	virtual ~JobPayload() = 0;
+	virtual ~JobPayload() {};
 };
 
+//JobPayload::~JobPayload() {}

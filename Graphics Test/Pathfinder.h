@@ -9,10 +9,10 @@
 #include <queue>
 
 #include "Entity.h"
-#include "Job.h"
 #include "Threadable.h"
 
 class Game;
+class Job;
 
 class Pathfinder :
 	public Entity,

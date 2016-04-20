@@ -1,6 +1,10 @@
 #include "Job.h"
 
-Job::Job(std::string const command)
+#include <iostream>
+
+Job::Job(std::string const command) :
+	deliver(nullptr),
+	responce(nullptr)
 {
 	this->command = command;
 	complete = false;
