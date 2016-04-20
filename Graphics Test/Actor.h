@@ -2,7 +2,6 @@
 
 #include <SFML\Graphics.hpp>
 #include "Game.h"
-#include "JobGenerator.h"
 #include "Entity.h"
 
 class CommandDrawable;

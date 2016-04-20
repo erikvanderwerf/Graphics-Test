@@ -1,10 +1,6 @@
 #include "Job.h"
 
-
-
-Job::Job(std::string const command) : 
-	deliver(0, nullptr),
-	responce(0, nullptr)
+Job::Job(std::string const command)
 {
 	this->command = command;
 	complete = false;
@@ -13,4 +9,6 @@ Job::Job(std::string const command) :
 
 Job::~Job()
 {
+	delete deliver;
+	delete responce;
 }

@@ -1,7 +1,9 @@
 #include <iostream>
 
-#include "Game.h"
 #include "Pathfinder.h"
+#include "JobPayload.h"
+#include "PathfindPayload.h"
+#include "Game.h"
 
 Pathfinder::Pathfinder()
 {
@@ -51,12 +53,13 @@ void Pathfinder::start()
 		lock.unlock();
 
 		// Complete Job
-		sf::Vector2f* ndest = new sf::Vector2f();
-		ndest->x = (float)(std::rand() % 10000);
-		ndest->y = (float)(std::rand() % 10000);
+		sf::Vector2f ndest = sf::Vector2f();
+		ndest.x = (float)(std::rand() % 10000);
+		ndest.y = (float)(std::rand() % 10000);
 		
-		job->responce.first = sizeof(sf::Vector2f);
-		job->responce.second = ndest;
+		PathfindPayload* responce = (PathfindPayload*) job->responce;
+		responce->payload = ndest;
+
 		job->complete = true;
 
 	}

@@ -1,8 +1,10 @@
 #define _USE_MATH_DEFINES
 
-#include "Actor.h"
-#include<math.h>
 #include <iostream>
+#include <math.h>
+
+#include "Actor.h"
+#include "PathfindPayload.h"
 
 Actor::Actor() : 
 	display(*this),
@@ -34,12 +36,10 @@ int Actor::jobCallback(Job * job)
 		return 0;
 
 	if ("pathfind" == job->command) {
-		sf::Vector2f* resp = (sf::Vector2f*)job->responce.second;
-		setDestination(*resp);
+		PathfindPayload* resp = (PathfindPayload*)job->responce;
+		setDestination(resp->payload);
 		waiting_path = false;
-
 		delete resp;
-		delete job;
 		return 1;
 	}
 	return 1;
@@ -63,6 +63,8 @@ void Actor::tick(float dt)
 
 	if (!waiting_path && sqrt(pow(destination.x - coordinate.x, 2) + pow(destination.y - coordinate.y, 2)) < 5) {
 		Job* pathjob = new Job("pathfind");
+		pathjob->deliver = new PathfindPayload();
+
 		jobs.push_back(pathjob);
 		game->registerJob(pathjob);
 		waiting_path = true;

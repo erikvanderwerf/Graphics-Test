@@ -3,9 +3,7 @@
 #include <string>
 
 #include "Entity.h"
-#include "JobGenerator.h"
-
-//class JobGenerator;
+#include "JobPayload.h"
 
 class Job
 {
@@ -17,6 +15,6 @@ public:
 	std::string command;
 
 	//JobGenerator* origin;
-	std::pair<long, void*> deliver, responce;
+	JobPayload *deliver, *responce;
 };
 
