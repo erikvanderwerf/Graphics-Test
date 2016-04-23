@@ -24,7 +24,7 @@ public:
 	int virtual jobCallback(Job* job);
 
 	void setColor(sf::Color color);
-	void setDestination(sf::Vector2f dest);
+	void setPath(std::list<sf::Vector2f> path);
 	void setPosition(sf::Vector2f position);
 	void setVelocity(sf::Vector2f vel);
 private:
@@ -45,7 +45,7 @@ private:
 	ActorDisplay display;
 	float radius = 25.f;
 	sf::Vector2f coordinate;
-	sf::Vector2f destination;
+	std::list<sf::Vector2f> path;
 	sf::Vector2f velocity;
 
 	bool waiting_path;

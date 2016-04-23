@@ -19,20 +19,15 @@ Game::Game() : escapelistener(*this), rd(*this)
 
 	// Default Actors, remove later
 	std::cerr << "Generating" << std::endl;
-	Actor* a;
 	const int spd_rng = 200;
 	const int dest_rng = 10000;
 
-	Actor * actors = new Actor[100000];
+	Actor * a;
+	Actor * actors = new Actor[100];
 
-	for (int i = 0; i < 100000; i++) {
-		if (!(i % 100))
-			std::cout << i << std::endl;
-		int x, y, vx, vy, r, g, b;
-		x = 0;// std::rand() % dest_rng;
-		y = 0;// std::rand() % dest_rng;
-		vx = 0;//std::rand() % dest_rng;
-		vy = 0;// std::rand() % dest_rng;
+	for (int i = 0; i < 100; i++) {
+		if (!(i % 100)) std::cout << i << std::endl;
+		int r, g, b;
 
 		r = (1*i) % 255;
 		g = (3*i) % 255;
@@ -40,8 +35,6 @@ Game::Game() : escapelistener(*this), rd(*this)
 
 		a = &actors[i];
 		a->setColor(sf::Color(r,g,b));
-		a->setPosition(sf::Vector2f((float)x, (float)y));
-		a->setDestination(sf::Vector2f((float)vx, (float)vy));
 
 		registerEntity(a);
 	}
@@ -129,6 +122,6 @@ void Game::RandomDestination::fire(GameEvent event)
 	for (Actor* a: super.actors) {
 		vx = std::rand() % dest_rng;
 		vy = std::rand() % dest_rng;
-		a->setDestination(sf::Vector2f((float)vx, (float)vy));
+		//a->setDestination(sf::Vector2f((float)vx, (float)vy));
 	}
 }

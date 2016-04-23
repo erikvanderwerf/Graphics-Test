@@ -53,16 +53,16 @@ void Pathfinder::start()
 		lock.unlock();
 
 		// Complete Job
-		sf::Vector2f ndest = sf::Vector2f();
-		ndest.x = (float)(std::rand() % 10000);
-		ndest.y = (float)(std::rand() % 10000);
-		
+		PayloadDeliverPayload& deliver = *((PayloadDeliverPayload*)job->deliver);
+
+		std::list<sf::Vector2f> path;
+		path.push_back(deliver.payload);
+
 		job->responce = new PathfindPayload();
 		PathfindPayload* responce = (PathfindPayload*)job->responce;
-		responce->payload = ndest;
+		responce->payload = path;
 
 		job->complete = true;
-
 	}
 }
 

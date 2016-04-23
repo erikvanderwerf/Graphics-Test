@@ -39,7 +39,8 @@ int Actor::jobCallback(Job * job)
 	// Determine command within job.
 	if ("pathfind" == job->command) {
 		PathfindPayload* resp = (PathfindPayload*)job->responce;
-		setDestination(resp->payload);
+
+		setPath(resp->payload);
 		waiting_path = false;
 	}
 
@@ -53,9 +54,10 @@ void Actor::setColor(sf::Color color)
 	display.setColor(color);
 }
 
-void Actor::setDestination(sf::Vector2f dest)
+void Actor::setPath(std::list<sf::Vector2f> path)
 {
-	destination = dest;
+	//delete this->path;
+	this->path = path;
 }
 
 void Actor::tick(float dt)
@@ -64,9 +66,23 @@ void Actor::tick(float dt)
 		[&](Job* job) { return jobCallback(job); })
 	, jobs.end());
 
-	if (!waiting_path && sqrt(pow(destination.x - coordinate.x, 2) + pow(destination.y - coordinate.y, 2)) < 5) {
-		Job* pathjob = new Job("pathfind");
+	std::cerr << "Hello" << path.size() << std::endl;
+
+	sf::Vector2f destination = path.front();
+
+	if (path.size() != 0 && sqrt(pow(destination.x - coordinate.x, 2) + pow(destination.y - coordinate.y, 2)) < 5) {
 		//pathjob->deliver = new PathfindPayload();
+		path.pop_front();
+
+	}
+
+	if (!waiting_path && path.size() == 0) {
+		Job* pathjob = new Job("pathfind");
+		
+		sf::Vector2f ndest = sf::Vector2f();
+		ndest.x = (float)(std::rand() % 10000);
+		ndest.y = (float)(std::rand() % 10000);
+		pathjob->deliver = new PayloadDeliverPayload(ndest);
 
 		jobs.push_back(pathjob);
 		game->registerJob(pathjob);

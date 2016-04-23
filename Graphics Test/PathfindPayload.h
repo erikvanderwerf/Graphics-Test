@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML\Graphics.hpp>
 
+#include <list>
+
 #include "JobPayload.h"
 
 class PathfindPayload :
@@ -9,6 +11,6 @@ class PathfindPayload :
 public:
 	virtual ~PathfindPayload();
 
-	sf::Vector2f payload;
+	std::list<sf::Vector2f> payload;
 };
 

@@ -2,8 +2,6 @@
 
 #include <string>
 
-//#include "JobPayload.h"
-
 class JobPayload;
 
 class Job
