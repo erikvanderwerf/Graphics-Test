@@ -22,10 +22,12 @@ Game::Game() : escapelistener(*this), rd(*this)
 	const int spd_rng = 200;
 	const int dest_rng = 10000;
 
-	Actor * a;
-	Actor * actors = new Actor[100];
+	const int num_actors = 40000;
 
-	for (int i = 0; i < 100; i++) {
+	Actor * a;
+	Actor * actors = new Actor[num_actors];
+
+	for (int i = 0; i < num_actors; i++) {
 		if (!(i % 100)) std::cout << i << std::endl;
 		int r, g, b;
 

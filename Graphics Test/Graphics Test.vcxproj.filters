@@ -39,9 +39,6 @@
     <ClCompile Include="Job.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PathfindPayload.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -83,7 +80,7 @@
     <ClInclude Include="JobPayload.h">
       <Filter>Header Files\JobPayload</Filter>
     </ClInclude>
-    <ClInclude Include="PathfindPayload.h">
+    <ClInclude Include="PathfindResponcePayload.h">
       <Filter>Header Files\JobPayload</Filter>
     </ClInclude>
   </ItemGroup>

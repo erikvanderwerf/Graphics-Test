@@ -38,7 +38,7 @@ int Actor::jobCallback(Job * job)
 
 	// Determine command within job.
 	if ("pathfind" == job->command) {
-		PathfindPayload* resp = (PathfindPayload*)job->responce;
+		PathfindResponcePayload* resp = (PathfindResponcePayload*)job->responce;
 
 		setPath(resp->payload);
 		waiting_path = false;
@@ -66,14 +66,10 @@ void Actor::tick(float dt)
 		[&](Job* job) { return jobCallback(job); })
 	, jobs.end());
 
-	std::cerr << "Hello" << path.size() << std::endl;
-
-	sf::Vector2f destination = path.front();
+	sf::Vector2f destination = (path.size() != 0)? path.front(): sf::Vector2f(0,1);
 
 	if (path.size() != 0 && sqrt(pow(destination.x - coordinate.x, 2) + pow(destination.y - coordinate.y, 2)) < 5) {
-		//pathjob->deliver = new PathfindPayload();
 		path.pop_front();
-
 	}
 
 	if (!waiting_path && path.size() == 0) {
@@ -89,8 +85,11 @@ void Actor::tick(float dt)
 		waiting_path = true;
 	}
 
-	velocity.x = (float)(-(coordinate.x - destination.x) / 0.5);
-	velocity.y = (float)(-(coordinate.y - destination.y) / 0.5);
+	//velocity.x = (float)(-(coordinate.x - destination.x) / 0.5);
+	//velocity.y = (float)(-(coordinate.y - destination.y) / 0.5);
+
+	sf::Vector2f d = destination - coordinate;
+	velocity = d / (float)(1.0/100.0 * sqrt(pow(d.x, 2) + pow(d.y, 2)));
 
 	coordinate.x += velocity.x * dt;
 	coordinate.y += velocity.y * dt;

@@ -5,12 +5,15 @@
 
 #include "JobPayload.h"
 
-class PathfindPayload :
+class PathfindResponcePayload :
 	public JobPayload
 {
 public:
-	virtual ~PathfindPayload();
+	virtual ~PathfindResponcePayload();
 
 	std::list<sf::Vector2f> payload;
 };
 
+PathfindResponcePayload::~PathfindResponcePayload()
+{
+}
