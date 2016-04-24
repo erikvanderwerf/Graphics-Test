@@ -18,6 +18,7 @@ public:
 
 	bool isOpen();
 	void addCommandDrawable(CommandDrawable* command);
+	sf::Vector2f transform(sf::Vector2f input);
 
 	// Entity
 	virtual void bind(Game* game);

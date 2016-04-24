@@ -199,7 +199,6 @@
     <ClInclude Include="Job.h" />
     <ClInclude Include="JobPayload.h" />
     <ClInclude Include="Pathfinder.h" />
-    <ClInclude Include="PathfindResponcePayload.h" />
     <ClInclude Include="Threadable.h" />
     <ClInclude Include="Viewport.h" />
   </ItemGroup>

@@ -19,10 +19,7 @@ Game::Game() : escapelistener(*this), rd(*this)
 
 	// Default Actors, remove later
 	std::cerr << "Generating" << std::endl;
-	const int spd_rng = 200;
-	const int dest_rng = 10000;
-
-	const int num_actors = 40000;
+	const int num_actors = 25;
 
 	Actor * a;
 	Actor * actors = new Actor[num_actors];
@@ -31,9 +28,9 @@ Game::Game() : escapelistener(*this), rd(*this)
 		if (!(i % 100)) std::cout << i << std::endl;
 		int r, g, b;
 
-		r = (1*i) % 255;
-		g = (3*i) % 255;
-		b = (5*i) % 255;
+		r = (67*i) % 255;
+		g = (73*i) % 255;
+		b = (83*i) % 255;
 
 		a = &actors[i];
 		a->setColor(sf::Color(r,g,b));

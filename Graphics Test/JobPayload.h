@@ -1,19 +1,18 @@
 #pragma once
 
 #include <SFML\Graphics.hpp>
+#include <list>
 
-class JobPayload
-{
+
+class JobPayload {};
+
+template<typename T>
+class JPT : public JobPayload {
 public:
-	virtual ~JobPayload() {};
+	JPT(T p) { payload = p; };
+
+	T payload;
 };
 
-class PayloadDeliverPayload :
-	public JobPayload
-{
-public:
-	PayloadDeliverPayload(sf::Vector2f payload) { this->payload = payload; };
-	//virtual ~PathfindPayload();
-
-	sf::Vector2f payload;
-};
+typedef JPT<sf::Vector2f>				PathfindDeliverPayload;
+typedef JPT<std::list<sf::Vector2f>>	PathfindResponcePayload;

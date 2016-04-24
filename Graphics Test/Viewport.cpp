@@ -82,6 +82,13 @@ void Viewport::addCommandDrawable(CommandDrawable * command)
 	display.push_back(command);
 }
 
+sf::Vector2f Viewport::transform(sf::Vector2f input)
+{
+	float x = zoom * (input.x - display_ul.x);
+	float y = zoom * (input.y - display_ul.y);
+	return sf::Vector2f(x, y);
+}
+
 
 Viewport::PanDisplay::PanDisplay(Viewport & super) : super(super) {
 }

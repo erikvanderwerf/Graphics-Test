@@ -4,7 +4,7 @@
 #include <math.h>
 
 #include "Actor.h"
-#include "PathfindPayload.h"
+#include "JobPayload.h"
 
 Actor::Actor() : 
 	display(*this),
@@ -76,17 +76,14 @@ void Actor::tick(float dt)
 		Job* pathjob = new Job("pathfind");
 		
 		sf::Vector2f ndest = sf::Vector2f();
-		ndest.x = (float)(std::rand() % 10000);
-		ndest.y = (float)(std::rand() % 10000);
-		pathjob->deliver = new PayloadDeliverPayload(ndest);
+		ndest.x = (float)(std::rand() % 1000);
+		ndest.y = (float)(std::rand() % 1000);
+		pathjob->deliver = new PathfindDeliverPayload(ndest);
 
 		jobs.push_back(pathjob);
 		game->registerJob(pathjob);
 		waiting_path = true;
 	}
-
-	//velocity.x = (float)(-(coordinate.x - destination.x) / 0.5);
-	//velocity.y = (float)(-(coordinate.y - destination.y) / 0.5);
 
 	sf::Vector2f d = destination - coordinate;
 	velocity = d / (float)(1.0/100.0 * sqrt(pow(d.x, 2) + pow(d.y, 2)));
@@ -101,20 +98,31 @@ Actor::ActorDisplay::~ActorDisplay() {}
 
 void Actor::ActorDisplay::draw(Viewport* view)
 {
-	float x = view->zoom * (parent.coordinate.x - view->display_ul.x);
-	float y = view->zoom * (parent.coordinate.y - view->display_ul.y);
+	// Position on screen
 	float radius = parent.radius * view->zoom;
+	sf::Vector2f center = view->transform(parent.coordinate);
+	sf::Vector2f pos(center.x - radius, center.y - radius);
 
+	// Actor Circle
 	circle.setRadius(radius);
 	circle.setFillColor(color);
-	circle.setPosition(x, y);
+	circle.setPosition(pos);
 
+	// Velocity Rectangle
 	rect.setScale(view->zoom, view->zoom);
-	rect.setPosition(x + radius , y + radius);
+	rect.setPosition(center);
 	rect.setRotation((float)(atan2f(parent.velocity.y, parent.velocity.x) * 180 / M_PI));
+
+	// Destination
+	sf::VertexArray dest(sf::LinesStrip);
+	dest.append(center);
+	for (sf::Vector2f waypoint : parent.path) {
+		dest.append(view->transform(waypoint));
+	}
 
 	view->window->draw(circle);
 	view->window->draw(rect);
+	view->window->draw(dest);
 }
 
 sf::FloatRect Actor::ActorDisplay::getBoundingBox()
@@ -124,4 +132,5 @@ sf::FloatRect Actor::ActorDisplay::getBoundingBox()
 
 void Actor::ActorDisplay::setColor(sf::Color color) {
 	this->color = color;
+	circle.setFillColor(color);
 }

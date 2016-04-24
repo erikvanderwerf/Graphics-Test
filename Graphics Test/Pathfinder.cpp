@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Pathfinder.h"
-#include "PathfindPayload.h"
+#include "JobPayload.h"
 #include "Game.h"
 
 Pathfinder::Pathfinder()
@@ -52,14 +52,14 @@ void Pathfinder::start()
 		lock.unlock();
 
 		// Complete Job
-		PayloadDeliverPayload& deliver = *((PayloadDeliverPayload*)job->deliver);
+		PathfindDeliverPayload& deliver = *((PathfindDeliverPayload*)job->deliver);
 
 		std::list<sf::Vector2f> path;
+		//path.push_back(sf::Vector2f(500,500));
 		path.push_back(deliver.payload);
 
-		job->responce = new PathfindResponcePayload();
+		job->responce = new PathfindResponcePayload(path);
 		PathfindResponcePayload* responce = (PathfindResponcePayload*)job->responce;
-		responce->payload = path;
 
 		job->complete = true;
 	}
