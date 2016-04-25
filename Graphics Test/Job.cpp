@@ -10,7 +10,6 @@ Job::Job(std::string const command) :
 	complete = false;
 }
 
-
 Job::~Job()
 {
 	delete deliver;

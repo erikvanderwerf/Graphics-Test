@@ -9,4 +9,3 @@ public:
 	virtual void draw(Viewport* window) = 0;
 	virtual sf::FloatRect getBoundingBox() = 0;
 };
-

@@ -25,7 +25,7 @@ public:
 	void registerJob(Job* job);
 	void registerThread(Threadable* threadable);
 	void fireEvent(GameEvent game_event);
-	
+
 	bool volatile running;
 	EventHandler* eventhandler;
 	std::list<Actor*> actors;
@@ -52,4 +52,3 @@ private:
 	std::list<Entity*> gameEntities;
 	std::vector<Threadable*> threads;
 };
-

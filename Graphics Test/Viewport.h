@@ -10,7 +10,7 @@
 class CommandDrawable;
 class Game;
 
-class Viewport: public Entity, public Threadable
+class Viewport : public Entity, public Threadable
 {
 public:
 	Viewport();
@@ -28,7 +28,7 @@ public:
 	virtual bool isReady();
 	virtual void start();
 	virtual void stop();
-	
+
 	sf::RenderWindow* window;
 	sf::Vector2f display_ul; // Upper-left
 	sf::Vector2f display_c; // Center
@@ -53,4 +53,3 @@ private:
 	std::list<CommandDrawable*> display;
 	PanDisplay pan;
 };
-

@@ -6,7 +6,7 @@
 #include "Actor.h"
 #include "JobPayload.h"
 
-Actor::Actor() : 
+Actor::Actor() :
 	display(*this),
 	jobs()
 {}
@@ -62,19 +62,21 @@ void Actor::setPath(std::list<sf::Vector2f> path)
 
 void Actor::tick(float dt)
 {
+	// Find and process completed jobs
 	jobs.erase(std::remove_if(jobs.begin(), jobs.end(),
-		[&](Job* job) { return jobCallback(job); })
-	, jobs.end());
+		[this](Job* job) { return jobCallback(job); })
+		, jobs.end());
 
-	sf::Vector2f destination = (path.size() != 0)? path.front(): sf::Vector2f(0,1);
+	sf::Vector2f destination = (path.size() != 0) ? path.front() : sf::Vector2f(0, 1);
 
 	if (path.size() != 0 && sqrt(pow(destination.x - coordinate.x, 2) + pow(destination.y - coordinate.y, 2)) < 5) {
 		path.pop_front();
 	}
 
+	// Request a new path
 	if (!waiting_path && path.size() == 0) {
 		Job* pathjob = new Job("pathfind");
-		
+
 		sf::Vector2f ndest = sf::Vector2f();
 		ndest.x = (float)(std::rand() % 1000);
 		ndest.y = (float)(std::rand() % 1000);
@@ -85,8 +87,10 @@ void Actor::tick(float dt)
 		waiting_path = true;
 	}
 
+	std::list<Entity*> close = game->;
+
 	sf::Vector2f d = destination - coordinate;
-	velocity = d / (float)(1.0/100.0 * sqrt(pow(d.x, 2) + pow(d.y, 2)));
+	velocity = d / (float)(1.0 / 100.0 * sqrt(pow(d.x, 2) + pow(d.y, 2)));
 
 	coordinate.x += velocity.x * dt;
 	coordinate.y += velocity.y * dt;

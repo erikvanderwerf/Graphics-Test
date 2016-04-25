@@ -8,7 +8,6 @@ Pathfinder::Pathfinder()
 {
 }
 
-
 Pathfinder::~Pathfinder()
 {
 }

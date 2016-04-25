@@ -22,4 +22,3 @@ private:
 	std::map<sf::Keyboard::Key, std::list<EventListener*>> keyPressedListeners;
 	std::map<sf::Keyboard::Key, std::list<EventListener*>> keyReleasedListeners;
 };
-

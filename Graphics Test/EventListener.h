@@ -10,4 +10,3 @@ public:
 	//~EventListener();
 	void virtual fire(GameEvent event) = 0;
 };
-

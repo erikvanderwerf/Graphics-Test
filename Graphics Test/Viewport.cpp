@@ -4,10 +4,9 @@
 
 #include <iostream>
 
-Viewport::Viewport(): pan(*this)
+Viewport::Viewport() : pan(*this)
 {
 }
-
 
 Viewport::~Viewport()
 {
@@ -16,18 +15,15 @@ Viewport::~Viewport()
 	}
 }
 
-
 bool Viewport::isOpen()
 {
 	return window->isOpen();
 }
 
-
 bool Viewport::isReady()
 {
 	return ready;
 }
-
 
 void Viewport::bind(Game * game)
 {
@@ -36,12 +32,10 @@ void Viewport::bind(Game * game)
 	game->registerEntity(&pan);
 }
 
-
 void Viewport::stop()
 {
 	ready = false;
 }
-
 
 void Viewport::start()
 {
@@ -76,7 +70,6 @@ void Viewport::start()
 	window->close();
 }
 
-
 void Viewport::addCommandDrawable(CommandDrawable * command)
 {
 	display.push_back(command);
@@ -89,10 +82,8 @@ sf::Vector2f Viewport::transform(sf::Vector2f input)
 	return sf::Vector2f(x, y);
 }
 
-
 Viewport::PanDisplay::PanDisplay(Viewport & super) : super(super) {
 }
-
 
 void Viewport::PanDisplay::bind(Game * game)
 {
@@ -108,7 +99,6 @@ void Viewport::PanDisplay::bind(Game * game)
 	game->eventhandler->registerKeyReleasedListener(sf::Keyboard::A, this);
 	game->eventhandler->registerKeyReleasedListener(sf::Keyboard::D, this);
 }
-
 
 void Viewport::PanDisplay::fire(GameEvent event)
 {
@@ -146,7 +136,6 @@ void Viewport::PanDisplay::fire(GameEvent event)
 		break;
 	}
 }
-
 
 void Viewport::PanDisplay::tick(float dt)
 {

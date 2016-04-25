@@ -5,6 +5,5 @@ typedef sf::Event GameEvent;
 /*
 class GameEvent : public sf::Event
 {
-
 };
 */

@@ -1,10 +1,8 @@
 #include "EventHandler.h"
 
-
 void EventHandler::bind(Game* game) {
 	this->game = game;
 }
-
 
 void EventHandler::fire(GameEvent event)
 {

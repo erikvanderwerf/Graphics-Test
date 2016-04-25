@@ -28,17 +28,18 @@ Game::Game() : escapelistener(*this), rd(*this)
 		if (!(i % 100)) std::cout << i << std::endl;
 		int r, g, b;
 
-		r = (67*i) % 255;
-		g = (73*i) % 255;
-		b = (83*i) % 255;
+		r = (67 * i) % 255;
+		g = (73 * i) % 255;
+		b = (83 * i) % 255;
 
 		a = &actors[i];
-		a->setColor(sf::Color(r,g,b));
+		a->setColor(sf::Color(r, g, b));
 
 		registerEntity(a);
 	}
-}
 
+	// Default Obstacle, remove later
+}
 
 Game::~Game()
 {
@@ -46,7 +47,6 @@ Game::~Game()
 		//e->~Entity();
 	}
 }
-
 
 int Game::start()
 {
@@ -118,7 +118,7 @@ Game::RandomDestination::RandomDestination(Game & parent) : super(parent) {}
 void Game::RandomDestination::fire(GameEvent event)
 {
 	int vx, vy, dest_rng = 800;
-	for (Actor* a: super.actors) {
+	for (Actor* a : super.actors) {
 		vx = std::rand() % dest_rng;
 		vy = std::rand() % dest_rng;
 		//a->setDestination(sf::Vector2f((float)vx, (float)vy));

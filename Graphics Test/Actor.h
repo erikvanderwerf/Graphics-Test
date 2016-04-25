@@ -9,7 +9,7 @@ class Entity;
 class Game;
 class Viewport;
 
-class Actor: 
+class Actor :
 	public Entity
 {
 public:
@@ -51,4 +51,3 @@ private:
 	bool waiting_path;
 	std::vector<Job*> jobs;
 };
-
