@@ -37,17 +37,16 @@ private:
 		void setColor(sf::Color color);
 	private:
 		Actor& parent;
-		sf::RectangleShape rect;
 		sf::CircleShape circle;
 		sf::Color color;
 	};
 
 	ActorDisplay display;
+	bool waiting_path;
 	float radius = 25.f;
+	float speed = 50;
 	sf::Vector2f coordinate;
 	std::list<sf::Vector2f> path;
 	sf::Vector2f velocity;
-
-	bool waiting_path;
 	std::vector<Job*> jobs;
 };

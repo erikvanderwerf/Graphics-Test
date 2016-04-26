@@ -5,9 +5,11 @@
 #include <random>
 
 #include "Actor.h"
+#include "StaticSquare.h"
 #include "Pathfinder.h"
 
-Game::Game() : escapelistener(*this), rd(*this)
+Game::Game() : 
+	escapelistener(*this)
 {
 	// Event Handler
 	eventhandler = new EventHandler();
@@ -19,7 +21,7 @@ Game::Game() : escapelistener(*this), rd(*this)
 
 	// Default Actors, remove later
 	std::cerr << "Generating" << std::endl;
-	const int num_actors = 25;
+	const int num_actors = 50;
 
 	Actor * a;
 	Actor * actors = new Actor[num_actors];
@@ -33,12 +35,15 @@ Game::Game() : escapelistener(*this), rd(*this)
 		b = (83 * i) % 255;
 
 		a = &actors[i];
+		//a->setPosition(sf::Vector2f(r, g));
 		a->setColor(sf::Color(r, g, b));
 
 		registerEntity(a);
 	}
 
 	// Default Obstacle, remove later
+	StaticSquare* sq2 = new StaticSquare(sf::Vector2f(400, 400), sf::Vector2f(600, 600));
+	registerEntity(sq2);
 }
 
 Game::~Game()
@@ -66,7 +71,7 @@ int Game::start()
 		auto start = std::chrono::system_clock::now();
 
 		for (Entity* e : gameEntities) {
-			e->tick((float)(1.0 / 60));
+			e->tick((float)(1.0 / 60.0));
 		}
 
 		auto end = std::chrono::system_clock::now();
@@ -111,16 +116,4 @@ Game::EscapeListener::EscapeListener(Game & parent) : parent(parent) {}
 void Game::EscapeListener::fire(GameEvent event)
 {
 	parent.running = false;
-}
-
-Game::RandomDestination::RandomDestination(Game & parent) : super(parent) {}
-
-void Game::RandomDestination::fire(GameEvent event)
-{
-	int vx, vy, dest_rng = 800;
-	for (Actor* a : super.actors) {
-		vx = std::rand() % dest_rng;
-		vy = std::rand() % dest_rng;
-		//a->setDestination(sf::Vector2f((float)vx, (float)vy));
-	}
 }

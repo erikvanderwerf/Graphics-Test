@@ -1,10 +1,12 @@
 #define _USE_MATH_DEFINES
 
+#include <iomanip>
 #include <iostream>
 #include <math.h>
 
 #include "Actor.h"
 #include "JobPayload.h"
+#include "VectorUtil.h"
 
 Actor::Actor() :
 	display(*this),
@@ -39,7 +41,6 @@ int Actor::jobCallback(Job * job)
 	// Determine command within job.
 	if ("pathfind" == job->command) {
 		PathfindResponcePayload* resp = (PathfindResponcePayload*)job->responce;
-
 		setPath(resp->payload);
 		waiting_path = false;
 	}
@@ -69,7 +70,7 @@ void Actor::tick(float dt)
 
 	sf::Vector2f destination = (path.size() != 0) ? path.front() : sf::Vector2f(0, 1);
 
-	if (path.size() != 0 && sqrt(pow(destination.x - coordinate.x, 2) + pow(destination.y - coordinate.y, 2)) < 5) {
+	if (path.size() != 0 && sqrt(pow(destination.x - coordinate.x, 2) + pow(destination.y - coordinate.y, 2)) < radius) {
 		path.pop_front();
 	}
 
@@ -87,16 +88,31 @@ void Actor::tick(float dt)
 		waiting_path = true;
 	}
 
-	std::list<Entity*> close = game->;
+	// Forces
+	// Direction
+	sf::Vector2f direction = 
+	/*velocity =*/ normalize( destination - coordinate, speed );
 
-	sf::Vector2f d = destination - coordinate;
-	velocity = d / (float)(1.0 / 100.0 * sqrt(pow(d.x, 2) + pow(d.y, 2)));
+	// Avoidance
+	std::list<Actor*> close = game->actors;
+	sf::Vector2f repulse(0.0f, 0.0f);
+	for (Actor* a : close) {
+		sf::Vector2f diff = a->coordinate - coordinate;
+		if (0.0 != diff.x && 0.0 != diff.y) {
+			sf::Vector2f mag = sf::Vector2f(1.0f / diff.x, 1.0f / diff.y);
+			repulse -= mag;
+		}
+	}
 
-	coordinate.x += velocity.x * dt;
-	coordinate.y += velocity.y * dt;
+	sf::Vector2f force = direction + repulse;
+	velocity += force * dt;
+
+	// Limit Velocity
+	velocity = maximize(velocity, 100);
+	coordinate += velocity * dt;
 }
 
-Actor::ActorDisplay::ActorDisplay(Actor& parent) : parent(parent), rect(sf::Vector2f(25, 5)) {}
+Actor::ActorDisplay::ActorDisplay(Actor& parent) : parent(parent) {}
 
 Actor::ActorDisplay::~ActorDisplay() {}
 
@@ -113,9 +129,9 @@ void Actor::ActorDisplay::draw(Viewport* view)
 	circle.setPosition(pos);
 
 	// Velocity Rectangle
-	rect.setScale(view->zoom, view->zoom);
-	rect.setPosition(center);
-	rect.setRotation((float)(atan2f(parent.velocity.y, parent.velocity.x) * 180 / M_PI));
+	sf::VertexArray vel(sf::LinesStrip, 2);
+	vel[0] = center;
+	vel[1] = center + normalize(parent.velocity, radius);
 
 	// Destination
 	sf::VertexArray dest(sf::LinesStrip);
@@ -125,13 +141,14 @@ void Actor::ActorDisplay::draw(Viewport* view)
 	}
 
 	view->window->draw(circle);
-	view->window->draw(rect);
+	view->window->draw(vel);
 	view->window->draw(dest);
 }
 
 sf::FloatRect Actor::ActorDisplay::getBoundingBox()
 {
-	return sf::FloatRect(parent.coordinate.x, parent.coordinate.y, parent.radius * 2, parent.radius * 2);
+	float x = parent.coordinate.x, y = parent.coordinate.y, r = parent.radius;
+	return sf::FloatRect(x - r, y - r, r * 2, r * 2);
 }
 
 void Actor::ActorDisplay::setColor(sf::Color color) {

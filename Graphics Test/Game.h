@@ -29,6 +29,7 @@ public:
 	bool volatile running;
 	EventHandler* eventhandler;
 	std::list<Actor*> actors;
+	std::list<Entity*> gameEntities;
 	Viewport viewport;
 private:
 	class EscapeListener : public EventListener {
@@ -38,17 +39,8 @@ private:
 	private:
 		Game& parent;
 	};
-	class RandomDestination : public EventListener {
-	public:
-		RandomDestination(Game& parent);
-		void virtual fire(GameEvent event);
-	private:
-		Game& super;
-	};
 
 	EscapeListener escapelistener;
-	RandomDestination rd;
 	Pathfinder pathfinder;
-	std::list<Entity*> gameEntities;
 	std::vector<Threadable*> threads;
 };
