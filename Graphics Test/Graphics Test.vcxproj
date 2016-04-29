@@ -187,6 +187,7 @@
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="StaticSquare.cpp" />
     <ClCompile Include="Viewport.cpp" />
+    <ClCompile Include="VKeyboard.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -205,6 +206,7 @@
     <ClInclude Include="Threadable.h" />
     <ClInclude Include="VectorUtil.h" />
     <ClInclude Include="Viewport.h" />
+    <ClInclude Include="VKeyboard.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

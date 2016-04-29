@@ -2,8 +2,13 @@
 
 #include <string>
 
-class JobPayload;
+class JobSkeleton;
 
+/**
+ * A job is an asynchronous task that is dispatched to the proper job handler
+ * when registered. The complete flag is set once the relevent computation
+ * has been performed.
+ */
 class Job
 {
 public:
@@ -11,7 +16,7 @@ public:
 	~Job();
 
 	bool volatile complete;
-	std::string command;
+	std::string destination;
 
-	JobPayload *deliver, *responce;
+	JobSkeleton *deliver, *responce;
 };

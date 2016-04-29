@@ -39,6 +39,9 @@
     <ClCompile Include="StaticSquare.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VKeyboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StaticSquare.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VKeyboard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

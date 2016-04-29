@@ -6,7 +6,7 @@ Job::Job(std::string const command) :
 	deliver(nullptr),
 	responce(nullptr)
 {
-	this->command = command;
+	this->destination = command;
 	complete = false;
 }
 

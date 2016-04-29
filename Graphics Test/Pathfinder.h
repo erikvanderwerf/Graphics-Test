@@ -9,10 +9,14 @@
 #include <queue>
 
 #include "Entity.h"
+#include "JobPayload.h"
 #include "Threadable.h"
 
 class Game;
 class Job;
+
+typedef JobPayload<sf::Vector2f> PathfindDeliverPayload;
+typedef JobPayload<std::list<sf::Vector2f>>	PathfindResponcePayload;
 
 class Pathfinder :
 	public Entity,

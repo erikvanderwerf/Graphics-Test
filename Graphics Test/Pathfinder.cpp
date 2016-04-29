@@ -52,9 +52,8 @@ void Pathfinder::start()
 
 		// Complete Job
 		PathfindDeliverPayload& deliver = *((PathfindDeliverPayload*)job->deliver);
-
 		std::list<sf::Vector2f> path;
-		//path.push_back(sf::Vector2f(500,500));
+
 		path.push_back(deliver.payload);
 
 		job->responce = new PathfindResponcePayload(path);

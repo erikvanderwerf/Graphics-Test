@@ -16,6 +16,10 @@ StaticSquare::~StaticSquare()
 void StaticSquare::bind(Game * game)
 {
 	this->game = game;
+
+	
+
+	//game->registerJob();
 	game->viewport.addCommandDrawable(&display);
 }
 

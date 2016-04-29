@@ -5,7 +5,7 @@
 #include <math.h>
 
 #include "Actor.h"
-#include "JobPayload.h"
+#include "Pathfinder.h"
 #include "VectorUtil.h"
 
 Actor::Actor() :
@@ -39,7 +39,7 @@ int Actor::jobCallback(Job * job)
 		return 0;
 
 	// Determine command within job.
-	if ("pathfind" == job->command) {
+	if ("pathfind" == job->destination) {
 		PathfindResponcePayload* resp = (PathfindResponcePayload*)job->responce;
 		setPath(resp->payload);
 		waiting_path = false;
@@ -90,8 +90,7 @@ void Actor::tick(float dt)
 
 	// Forces
 	// Direction
-	sf::Vector2f direction = 
-	/*velocity =*/ normalize( destination - coordinate, speed );
+	sf::Vector2f direction = normalize(destination - coordinate, speed);
 
 	// Avoidance
 	std::list<Actor*> close = game->actors;
@@ -108,7 +107,7 @@ void Actor::tick(float dt)
 	velocity += force * dt;
 
 	// Limit Velocity
-	velocity = maximize(velocity, 100);
+	velocity = maximize(direction, 100);
 	coordinate += velocity * dt;
 }
 

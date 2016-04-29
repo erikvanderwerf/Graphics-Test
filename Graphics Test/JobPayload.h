@@ -3,15 +3,12 @@
 #include <SFML\Graphics.hpp>
 #include <list>
 
-class JobPayload {};
+class JobSkeleton {};
 
 template<typename T>
-class JPT : public JobPayload {
+class JobPayload : public JobSkeleton {
 public:
-	JPT(T p) { payload = p; };
+	JobPayload(T p) { payload = p; };
 
 	T payload;
 };
-
-typedef JPT<sf::Vector2f>				PathfindDeliverPayload;
-typedef JPT<std::list<sf::Vector2f>>	PathfindResponcePayload;
